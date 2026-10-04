@@ -2,4 +2,4 @@
 
 ## Slides
 
-* Lab4.pdf
+* [Lab4.pdf](./Lab4.pdf)
