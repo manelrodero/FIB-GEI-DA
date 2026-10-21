@@ -26,7 +26,7 @@ sudo sysctl --system
 sudo sysctl -n vm.max_map_count
 ```
 
-* Confirmar l'espai de disc disponible (~50 GB)
+* Confirmar l'espai de disc disponible a `/dev/vda1` (~50 GB)
 
 ```bash
 df -h
@@ -140,6 +140,7 @@ docker run --rm httpd:2.4 htpasswd -bnBC 12 "" 'NouPasswordMesSecret' | cut -d: 
 * Modificar fitxer `config/wazuh_indexer/internal_users.yml` per canviar el hash de la contrasenya de l'usuari **admin**
 
 ```yaml
+# Aquest és el hash de "NouPasswordMesSecret" obtingut anteriorment
 admin:
   hash: "$2a$12$ZQlzW3DnzysSyEP.y.f.YuaFO2YfTwvXwcoG9rrlSXjBNoTeNLd9q"
 ```
@@ -197,7 +198,7 @@ sudo systemctl start wazuh-agent
 # Desactivar actualitzacions per garantir Wazuh Manager >= Wazuh Agent
 # sudo sed -i "s/^deb /#deb /" /etc/apt/sources.list.d/wazuh.list
 # sudo apt update
-sudo apt-mark hold wazuh-agent
+# sudo apt-mark hold wazuh-agent
 
 # Verificar l'estat de l'agent
 sudo /var/ossec/bin/wazuh-control status
@@ -213,6 +214,8 @@ sudo head -n 20 /var/ossec/logs/ossec.log
 ## Exercicis autònoms
 
 ### Desinstal·lar Wazuh Agent
+
+Si en algun moment és necessari desinstal·lar l'agent de Wazuh, es pot fer de la següent manera:
 
 ```bash
 # Comprovar estat
