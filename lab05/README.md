@@ -174,6 +174,8 @@ docker compose logs -f
 
 ### Desplegar agent local
 
+Primer s'afegeix el repositori de Wazuh:
+
 ```bash
 # Instal·lar paquets necessaris
 sudo apt-get install gnupg apt-transport-https curl -y
@@ -186,19 +188,30 @@ echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4
 
 # Actualitzar la informació dels paquets
 sudo apt update
+```
 
+A continuació s'instal·la la mateixa versió del servidor:
+
+```bash
 # Instal·lar l'agent (amb la IP local)
 sudo WAZUH_MANAGER="$(ip route get 1.1.1.1 | awk '{print $7; exit}')" apt install wazuh-agent=4.14.8-1 -y
 
+# Desactivar repositori de Wazuh per evitar actualitzacions de l'agent
+# sudo sed -i "s/^deb /#deb /" /etc/apt/sources.list.d/wazuh.list
+# sudo apt update
+
+# Evitar que APT instal·li una versió mes nova de l'agent automàticament
+sudo apt-mark hold wazuh-agent
+```
+
+Finalment, es posa en marxa l'agent i es comprova el seu estat:
+
+```bash
 # Habilitar i posar en marxa el servei de l'agent
 sudo systemctl daemon-reload
 sudo systemctl enable wazuh-agent
 sudo systemctl start wazuh-agent
-
-# Desactivar actualitzacions per garantir Wazuh Manager >= Wazuh Agent
-# sudo sed -i "s/^deb /#deb /" /etc/apt/sources.list.d/wazuh.list
-# sudo apt update
-# sudo apt-mark hold wazuh-agent
+sudo systemctl status wazuh-agent
 
 # Verificar l'estat de l'agent
 sudo /var/ossec/bin/wazuh-control status
@@ -213,6 +226,52 @@ sudo head -n 20 /var/ossec/logs/ossec.log
 
 ## Exercicis autònoms
 
+## Informació addicional
+
+### Wazuh Agent vs `hold`
+
+Quan s'instal·la Wazuh Agent, s'acostuma a **bloquejar** el paquet per evitar la seva actualització:
+
+```bash
+sudo apt-mark hold wazuh-agent
+```
+
+Això es fa per garantir que la versió del servidor (Manager) és **més gran o igual** que la dels agents i no hagi problemes de compatibilitat o funcions no implementades.
+
+Ara bé, el paquet `wazuh-agent` continuarà apareixent a la llista d'actualitzables tal com es pot veure en aquest exemple:
+
+```bash
+apt list --upgradable wazuh-agent
+```
+
+```text
+wazuh-agent/stable 4.14.9-1 amd64 [upgradable from: 4.14.8-1]
+N: There are 76 additional versions. Please use the '-a' switch to see them.
+```
+
+Per comprovar que el paquet està bloquet es pot fer servir la següent comanda:
+
+```bash
+apt-mark showhold
+```
+
+La simulació de l'actualització hauria d'indicar que `wazuh-agent` es manté amb l'anterior tal com es pot veure en aquest exemple:
+
+```bash
+sudo apt upgrade --simulate
+```
+
+```text
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Calculating upgrade... Done
+The following packages have been kept back:
+  wazuh-agent
+The following packages will be upgraded:
+[...]
+```
+
 ### Desinstal·lar Wazuh Agent
 
 Si en algun moment és necessari desinstal·lar l'agent de Wazuh, es pot fer de la següent manera:
@@ -224,11 +283,17 @@ sudo systemctl status wazuh-agent
 # Aturar l'agent
 sudo systemctl stop wazuh-agent
 
-# Desinstalar el paquet
-sudo apt purge wazuh-agent -y
+# Desprotegir el paquet per permetre que APT el pugui desinstal·lar
+sudo apt-mark unhold wazuh-agent
 
-# (Opcional) Esborrar restes de configuració
-sudo rm -rf /var/ossec
+# Desinstalar el paquet
+# sudo apt remove wazuh-agent -y
+
+# Esborrar restes de configuració
+# sudo rm -rf /var/ossec
+
+# Desinstalar el paquet i els fitxers de configuració
+sudo apt purge wazuh-agent -y
 ```
 
-> També cal esborrar-lo des d'Agents Management &rarr; Summary, sobretot si es vol tornar a instal·lar.
+> **Nota**: També cal esborrar-lo des d'Agents Management &rarr; Summary, sobretot si es vol tornar a instal·lar.
