@@ -210,7 +210,7 @@ ls -l mostres
 Executar YARA:
 
 ```bash
-yara reverse_shell.yar mostres
+yara reverse_shell_v1.yar mostres
 ```
 
 _Quina és la sortida de la comanda anterior?_
