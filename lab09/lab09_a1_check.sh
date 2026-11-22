@@ -1,7 +1,7 @@
 #!/bin/bash
 
 G=$1
-[[ "$G" =~ ^(0[1-9]|1[0-9]|20)$ ]] || { echo "Ús: bash $0 <grup>   (01..20, amb dos dígits)"; exit 1; }
+[[ "$G" =~ ^([01][0-9]|20)$ ]] || { echo "Ús: bash $0 <grup>   (01..20, amb dos dígits)"; exit 1; }
 
 D=/home/alumne/lab9/entrega
 [ -d "$D" ] || { echo "No existeix $D: fes primer el D1"; exit 1; }
