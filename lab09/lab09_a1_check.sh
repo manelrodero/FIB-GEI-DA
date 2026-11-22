@@ -17,7 +17,7 @@ N=$(docker compose exec -T wazuh.manager wc -l $ALERTS | cut -d' ' -f1)
 echo "[2/3] Creant els fitxers de prova..."
 for f in $FILES; do echo "grup$G" > "$D/$f"; done
 
-echo "[3/3] Esperant 15 s les alertes..."; sleep 15
+echo "[3/3] Esperant 15 seg les alertes..."; sleep 15
 NEW=$(docker compose exec -T wazuh.manager tail -n +$((N+1)) $ALERTS)
 
 for f in $FILES; do
