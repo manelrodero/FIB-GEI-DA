@@ -10,9 +10,9 @@ Material per als laboratoris de l'assignatura "Detecció d'Amenaces" del Grau en
 | 3 | Logs de Linux. syslog, journald i eines locals | [`lab03/`](./lab03/) | [Lab3.pdf](./lab03/Lab3.pdf) |
 | 4 | AV - NGAV - EPP - EDR - XDR | [`lab04/`](./lab04/) | [Lab4.pdf](./lab04/Lab4.pdf) |
 | 5 | Primer contacte amb un agent EDR (Wazuh) | [`lab05/`](./lab05/) | [Lab5.pdf](./lab05/Lab5.pdf) |
-| 6 | Detecció (signatures, heurística) + YARA | [`lab06/`](./lab06/) | Lab6.pdf |
-| 7 | Integració de YARA amb Wazuh | [`lab08/`](./lab07/) | Lab7.pdf |
-| 8 | Funcionalitats EDR-XDR amb Wazuh | [`lab08/`](./lab08/) | Lab8.pdf |
-| 9 | Integritat de fitxers (File Integrity Monitoring) | [`lab09/`](./lab09/) | Lab9.pdf |
+| 6 | Detecció (signatures, heurística) + YARA | [`lab06/`](./lab06/) | [Lab6.pdf](./lab06/Lab6.pdf) |
+| 7 | Integració de YARA amb Wazuh | [`lab08/`](./lab07/) | [Lab7.pdf](./lab07/Lab7.pdf) |
+| 8 | Funcionalitats EDR-XDR amb Wazuh | [`lab08/`](./lab08/) | [Lab8.pdf](./lab08/Lab8.pdf) |
+| 9 | Integritat de fitxers (File Integrity Monitoring) | [`lab09/`](./lab09/) | [Lab9.pdf](./lab09/Lab9.pdf) |
 | 10 | Resposta automàtica i Pla de ciberseguretat | [`lab10/`](./lab10/) | Lab10.pdf |
 | 11 | Cas pràctic integrador final | [`lab11/`](./lab11/) | Lab11.pdf |
